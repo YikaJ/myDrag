@@ -13,18 +13,31 @@ function Drag(config){
 		this.config[c] = config[c];
 		console.log(this.config.onStart);
 	}
+
+	this.init.apply(this, arguments);
 }
 
 Drag.prototype = {
 	init: function(){
 		var that = this;
+		this.maxL = Math.max(this.config.container.clientWidth, this.config.container.scrollWidth) - this.config.handler.offsetWidth;
+		this.maxT = Math.max(this.config.container.clientHeight, this.config.container.scrollHeight) - this.config.handler.offsetHeight;
+		console.log(this.maxH);
+
 		this.config.handler.onmousedown = function(e){
 			that.startDrag(e);
 		};
+
 		this.renderUI();
 	},
 	renderUI: function(){
+		var that = this;
 		this.config.handler.style.position = "absolute";
+		/*防止窗口影响*/
+		window.onresize = function(){
+			that.maxL = Math.max(that.config.container.clientWidth, that.config.container.scrollWidth) - that.config.handler.offsetWidth;
+			that.maxT = Math.max(that.config.container.clientHeight, that.config.container.scrollHeight) - that.config.handler.offsetHeight;
+		}
 	},
 	startDrag: function(e){
 		var e = window.e || e;
@@ -46,10 +59,19 @@ Drag.prototype = {
 	},
 	moveDrag: function(e){
 		var e = window.e || e;
-		this.newL = e.clientX - this.mX;
-		this.newT = e.clientY - this.mY;
-		this.config.handler.style.left = this.newL + "px";
-		this.config.handler.style.top = this.newT + "px";
+		var newL = e.clientX - this.mX;
+		var newT = e.clientY - this.mY;
+
+		/*这里是limit限制*/
+		this.config.limit &&(
+			newL < 0 && (newL = 0),
+			newT < 0 && (newT = 0),
+			newL > this.maxL && (newL = this.maxL),
+			newT > this.maxT && (newT = this.maxT)
+		)
+		/*move*/
+		this.config.handler.style.left = newL + "px";
+		this.config.handler.style.top = newT + "px";
 		this.config.onMove();
 	},
 	stopDrag: function(){
@@ -59,20 +81,3 @@ Drag.prototype = {
 	}
 }
 
-  /*应用层*/
-	var obj = document.getElementById('obj');
-	var dragObj = new Drag({
-		handler: obj,
-		onStart: function(){
-			console.log("onStart");
-			this.originBg = this.handler.style.background;
-			this.handler.style.background = "#000";
-		},
-		onMove: function(){
-			console.log("I'm moving!!!");
-		},
-		onEnd: function(){
-			console.log("stop it!");
-			this.handler.style.background = this.originBg;
-		}
-	}).init();
