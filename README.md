@@ -5,7 +5,7 @@ myDrag
 -----
 
 
-###API(以下均为默认值)
+###API(以下为初始化值的类型)
 ######&nbsp;&nbsp;handler : object&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// 必填，指定哪个元素可以进行拖动<br>
 ######&nbsp;&nbsp;container : object &nbsp;&nbsp;&nbsp;&nbsp;//指定包裹空间（可用于限制拖拽范围），可以不填<br>
 ######&nbsp;&nbsp;limit : boolean    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//是否需要范围限制<br>
