@@ -1,12 +1,12 @@
 myDrag
 =====
 
-my first widget in Github 我第一个Github的拖拽库
+#####my first widget in Github
+####（拖拽库） 
 -----
 
 
-API(以下均为默认值)
-=====
+###API(以下均为默认值)
   handler: null    // 必填，指定哪个元素可以进行拖动
   container: document.documentElement || document.body    //指定包裹空间（可用于限制拖拽范围），可以不填
   limit: true    //是否需要范围限制
