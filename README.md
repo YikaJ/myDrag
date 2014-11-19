@@ -13,5 +13,6 @@ my first widget in Github（拖拽库）
 ######&nbsp;&nbsp;onMove : function &nbsp;&nbsp; //自定义拖动时的事件<br>
 ######&nbsp;&nbsp;onEnd :function   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; //自定义结束拖动事件<br>
 
-可以结合demo进行使用
+######可以结合demo进行使用
+######v0.1只能对其中一个对象进行操作
 
