@@ -1,4 +1,4 @@
-myDrag
+myDrag.js
 =====
 
 my first widget in Github（拖拽库） 
@@ -13,5 +13,5 @@ my first widget in Github（拖拽库）
 ######&nbsp;&nbsp;onMove : function &nbsp;&nbsp; //自定义拖动时的事件<br>
 ######&nbsp;&nbsp;onEnd :function   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; //自定义结束拖动事件<br>
 
-
+可以结合demo进行使用
 
