@@ -4,14 +4,14 @@ function Drag(config){
 	this.config = {
 		handler: null,
 		container: document.documentElement || document.body,
-		limit: true,
+		isLimit: true,
 		onStart: function(){},
 		onMove: function(){},
 		onEnd: function(){}
 	}
 	for(var c in config){
 		this.config[c] = config[c];
-		console.log(this.config.onStart);
+
 	}
 
 	this.init.apply(this, arguments);
@@ -22,7 +22,6 @@ Drag.prototype = {
 		var that = this;
 		this.maxL = Math.max(this.config.container.clientWidth, this.config.container.scrollWidth) - this.config.handler.offsetWidth;
 		this.maxT = Math.max(this.config.container.clientHeight, this.config.container.scrollHeight) - this.config.handler.offsetHeight;
-		console.log(this.maxH);
 
 		this.config.handler.onmousedown = function(e){
 			that.startDrag(e);
@@ -41,7 +40,7 @@ Drag.prototype = {
 	},
 	startDrag: function(e){
 		var e = window.e || e;
-		console.log(e);
+
 		var that = this;
 		//鼠标在obj内部的位置
 		this.mX = e.clientX - this.config.handler.offsetLeft;
@@ -63,7 +62,7 @@ Drag.prototype = {
 		var newT = e.clientY - this.mY;
 
 		/*这里是limit限制*/
-		this.config.limit &&(
+		this.config.isLimit &&(
 			newL < 0 && (newL = 0),
 			newT < 0 && (newT = 0),
 			newL > this.maxL && (newL = this.maxL),
