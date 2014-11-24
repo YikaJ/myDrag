@@ -8,6 +8,9 @@
 <meta name="keywords" content="">
 <link href="" rel="stylesheet">
 <style>
+	html,body{
+		height: 1000px;
+	}
 	#obj{
 		width: 200px;
 		height: 200px;
@@ -38,19 +41,19 @@
 
 			/*自定义开始函数*/
 			onStart: function(){
-				console.log("yeah! start to move");
+				console.log("yeah! start to move") || true;
 				this.originBg = this.handler.style.background;
 				this.handler.style.background = "#000";
 			},
 
 			/*自定义移动函数*/
 			onMove: function(){
-				console.log("I'm moving!!!");
+				console.log("I'm moving!!!") || true;
 			},
 
 			/*自定义结束函数*/
 			onEnd: function(){
-				console.log("stop it!");
+				console.log("stop it!") || true;
 				this.handler.style.background = this.originBg;
 			}
 		});

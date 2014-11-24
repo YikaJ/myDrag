@@ -20,33 +20,31 @@ function Drag(config){
 Drag.prototype = {
 	init: function(){
 		var that = this;
-		this.maxL = Math.max(this.config.container.clientWidth, this.config.container.scrollWidth) - this.config.handler.offsetWidth;
-		this.maxT = Math.max(this.config.container.clientHeight, this.config.container.scrollHeight) - this.config.handler.offsetHeight;
-
+		this.maxL = this.config.container.clientWidth - this.config.handler.offsetWidth;
+		this.maxT = this.config.container.clientHeight - this.config.handler.offsetHeight;
 		this.config.handler.onmousedown = function(e){
 			that.startDrag(e);
 		};
-
+		/*UI初始化 */
 		this.renderUI();
+
+		/*防止窗口影响*/
+		window.onresize = function(){
+			that.maxL = that.config.container.clientWidth - that.config.handler.offsetWidth;
+			that.maxT = that.config.container.clientHeight - that.config.handler.offsetHeight;
+		}
 	},
 	renderUI: function(){
 		var that = this;
-		this.config.handler.style.position = "absolute";
-		/*防止窗口影响*/
-		window.onresize = function(){
-			that.maxL = Math.max(that.config.container.clientWidth, that.config.container.scrollWidth) - that.config.handler.offsetWidth;
-			that.maxT = Math.max(that.config.container.clientHeight, that.config.container.scrollHeight) - that.config.handler.offsetHeight;
-		}
+		this.config.handler.style.position = "fixed";
 	},
 	startDrag: function(e){
-		var e = window.e || e;
+		var e = e || window.event;
 
 		var that = this;
 		//鼠标在obj内部的位置
 		this.mX = e.clientX - this.config.handler.offsetLeft;
 		this.mY = e.clientY - this.config.handler.offsetTop;
-
-
 
 		this.config.onStart();
 		document.onmousemove = function(e){
@@ -57,9 +55,14 @@ Drag.prototype = {
 		}
 	},
 	moveDrag: function(e){
-		var e = window.e || e;
-		var newL = e.clientX - this.mX;
-		var newT = e.clientY - this.mY;
+		var e = e || window.event;
+		var that = this;
+		/*兼容scrollTop*/
+		var scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+		this.newL = e.clientX - this.mX;
+		this.newT = e.clientY - this.mY;
+		var newL = this.newL;
+		var newT = this.newT;
 
 		/*这里是limit限制*/
 		this.config.isLimit &&(
@@ -68,13 +71,17 @@ Drag.prototype = {
 			newL > this.maxL && (newL = this.maxL),
 			newT > this.maxT && (newT = this.maxT)
 		)
-		/*move*/
+		/*实现move*/
 		this.config.handler.style.left = newL + "px";
 		this.config.handler.style.top = newT + "px";
+		/*自定义的onMove函数*/
 		this.config.onMove();
 	},
 	stopDrag: function(){
+		this.newL = 0;
+		this.newT = 0;
 		this.config.onEnd();
+		
 		document.onmousemove = null;
 		document.onmouseup = null;
 	}
