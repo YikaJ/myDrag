@@ -57,8 +57,7 @@ Drag.prototype = {
 	moveDrag: function(e){
 		var e = e || window.event;
 		var that = this;
-		/*兼容scrollTop*/
-		var scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+
 		this.newL = e.clientX - this.mX;
 		this.newT = e.clientY - this.mY;
 		var newL = this.newL;
