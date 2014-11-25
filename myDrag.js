@@ -20,8 +20,8 @@ function Drag(config){
 Drag.prototype = {
 	init: function(){
 		var that = this;
-		this.maxL = this.config.container.clientWidth - this.config.handler.offsetWidth;
-		this.maxT = this.config.container.clientHeight - this.config.handler.offsetHeight;
+		this.maxL = Math.max(this.config.container.offsetWidth, this.config.container.clientWidth) - this.config.handler.offsetWidth;
+		this.maxT = Math.max(this.config.container.offsetHeight, this.config.container.clientHeight) - this.config.handler.offsetHeight;
 		this.config.handler.onmousedown = function(e){
 			that.startDrag(e);
 		};
@@ -30,13 +30,13 @@ Drag.prototype = {
 
 		/*防止窗口影响*/
 		window.onresize = function(){
-			that.maxL = that.config.container.clientWidth - that.config.handler.offsetWidth;
-			that.maxT = that.config.container.clientHeight - that.config.handler.offsetHeight;
+			this.maxL = Math.max(this.config.container.offsetWidth, this.config.container.clientWidth) - this.config.handler.offsetWidth;
+			this.maxT = Math.max(this.config.container.offsetHeight, this.config.container.clientHeight) - this.config.handler.offsetHeight;
 		}
 	},
 	renderUI: function(){
 		var that = this;
-		this.config.handler.style.position = "fixed";
+		this.config.handler.style.position = "absolute";
 	},
 	startDrag: function(e){
 		var e = e || window.event;
