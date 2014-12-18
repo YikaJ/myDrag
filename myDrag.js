@@ -11,10 +11,10 @@ function Drag(config){
 	}
 	for(var c in config){
 		this.config[c] = config[c];
-
 	}
 
-	this.init.apply(this, arguments);
+	//初始化
+	this.init();
 }
 
 Drag.prototype = {
@@ -30,8 +30,8 @@ Drag.prototype = {
 
 		/*防止窗口影响*/
 		window.onresize = function(){
-			this.maxL = Math.max(this.config.container.offsetWidth, this.config.container.clientWidth) - this.config.handler.offsetWidth;
-			this.maxT = Math.max(this.config.container.offsetHeight, this.config.container.clientHeight) - this.config.handler.offsetHeight;
+			that.maxL = Math.max(that.config.container.offsetWidth, that.config.container.clientWidth) - that.config.handler.offsetWidth;
+			that.maxT = Math.max(that.config.container.offsetHeight, that.config.container.clientHeight) - that.config.handler.offsetHeight;
 		}
 	},
 	renderUI: function(){
@@ -80,7 +80,7 @@ Drag.prototype = {
 		this.newL = 0;
 		this.newT = 0;
 		this.config.onEnd();
-		
+
 		document.onmousemove = null;
 		document.onmouseup = null;
 	}
